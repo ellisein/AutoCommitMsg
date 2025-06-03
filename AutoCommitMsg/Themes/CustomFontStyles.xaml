@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <FontFamily x:Key="DefaultFont">pack://application:,,,/Fonts/#Noto Sans KR</FontFamily>
+
+    <Style TargetType="TextBox">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+    </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+    </Style>
+</ResourceDictionary>
