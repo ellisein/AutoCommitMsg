@@ -1,6 +1,8 @@
-﻿using System.ClientModel;
-using Microsoft.Extensions.AI;
+﻿using Microsoft.Extensions.AI;
 using OpenAI;
+using System.ClientModel;
+using System.IO;
+using System.Reflection;
 
 namespace AutoCommitMsg.Services;
 
@@ -23,10 +25,30 @@ public static class AiService
 
         var chatMessages = new List<ChatMessage>
         {
-            new ChatMessage(ChatRole.User, prompt),
+            new (ChatRole.User, prompt),
         };
 
         var response = await client.GetResponseAsync(chatMessages);
         return response.Text;
+    }
+
+    public static async Task<string> GenerateCommitMessagesAsync(List<string> gitLogs, string gitDiff)
+    {
+        var prompt = LoadPrompt("generate-commit-messages");
+        var formattedLogs = string.Join("\n", gitLogs);
+        prompt = prompt
+            .Replace("{git_logs}", formattedLogs)
+            .Replace("{git_diff}", gitDiff);
+        return await RunPromptAsync(prompt);
+    }
+
+    private static string LoadPrompt(string promptName)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = $"AutoCommitMsg.Resources.Prompts.{promptName}.txt";
+        using var stream = assembly.GetManifestResourceStream(resourceName)
+            ?? throw new FileNotFoundException($"Resource '{resourceName}' not found.");
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
     }
 }

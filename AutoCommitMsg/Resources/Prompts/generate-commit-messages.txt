@@ -1,0 +1,14 @@
+You are a helpful assistant that writes concise and meaningful Git commit messages.
+
+Below are the recent Git commit logs and the current unstaged or staged changes.  
+Based on this context, generate **three different commit messages** that summarizes the intention of the changes.
+
+- Follow best practices for commit messages (present tense, concise, informative).
+- Each message should be different in tone or focus (e.g., technical, user-facing, summary-oriented).
+- Do not include any explanations or formatting - output only the 3 commit messages, each on a new line.
+
+Recent Git Logs:
+{git_logs}
+
+Git Diff:
+{git_diff}

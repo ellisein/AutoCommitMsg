@@ -14,7 +14,7 @@
             <Button Style="{DynamicResource MaterialDesignRaisedButton}"
             Height="35" Width="100" Click="ReturnButton_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <materialDesign:PackIcon Kind="ArrowLeftCircle" Width="18" Height="18" Margin="0,0,8,0" />
+                    <materialDesign:PackIcon Kind="ArrowBack" Width="18" Height="18" Margin="0,0,8,0" />
                     <TextBlock Text="Return" FontSize="12" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
