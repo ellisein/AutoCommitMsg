@@ -32,7 +32,7 @@ public partial class MainWindow : Window
         var resultVm = new ResultPageViewModel
         {
             CommitMessages = new ObservableCollection<string>(
-                response.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                response.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
         };
         var resultPage = new ResultPage { DataContext = resultVm };
 
@@ -59,6 +59,11 @@ public partial class MainWindow : Window
             loadingPage.ViewModel.StatusMessage = "Loading repository data...";
             var gitLogs = GitService.GetGitLogs(folderPath, 10);
             var gitDiff = GitService.GetGitDiff(folderPath);
+
+            if (string.IsNullOrEmpty(gitDiff))
+            {
+                throw new InvalidOperationException("No changes detected in the repository.");
+            }
 
             loadingPage.ViewModel.StatusMessage = "Generating commit message...";
             var response = await AiService.GenerateCommitMessagesAsync(gitLogs, gitDiff);
