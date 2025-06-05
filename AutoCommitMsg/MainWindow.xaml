@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="10"
-            Orientation="Horizontal" HorizontalAlignment="Right">
+                    Orientation="Horizontal" HorizontalAlignment="Right">
             <RadioButton Style="{DynamicResource MaterialDesignRadioButton}"
                          Content="English"
                          GroupName="Language"
