@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.AI;
+﻿using AutoCommitMsg.ViewModels;
+using Microsoft.Extensions.AI;
 using OpenAI;
 using System.ClientModel;
 using System.IO;
@@ -32,13 +33,14 @@ public static class AiService
         return response.Text;
     }
 
-    public static async Task<string> GenerateCommitMessagesAsync(List<string> gitLogs, string gitDiff)
+    public static async Task<string> GenerateCommitMessagesAsync(List<string> gitLogs, string gitDiff, AppLanguage language)
     {
         var prompt = LoadPrompt("generate-commit-messages");
         var formattedLogs = string.Join("\n", gitLogs);
         prompt = prompt
             .Replace("{git_logs}", formattedLogs)
-            .Replace("{git_diff}", gitDiff);
+            .Replace("{git_diff}", gitDiff)
+            .Replace("{language}", language.ToString());
         return await RunPromptAsync(prompt);
     }
 

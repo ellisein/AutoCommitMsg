@@ -48,6 +48,8 @@ public partial class MainWindow : Window
 
     private async Task GenerateCommitMessages(string? folderPath)
     {
+        var vm = (MainWindowViewModel)this.DataContext;
+
         try
         {
             var loadingPage = new LoadingPage();
@@ -66,7 +68,7 @@ public partial class MainWindow : Window
             }
 
             loadingPage.ViewModel.StatusMessage = "Generating commit message...";
-            var response = await AiService.GenerateCommitMessagesAsync(gitLogs, gitDiff);
+            var response = await AiService.GenerateCommitMessagesAsync(gitLogs, gitDiff, vm.SelectedLanguage);
             Debug.WriteLine(response);
 
             ShowResultPage(folderPath, response);

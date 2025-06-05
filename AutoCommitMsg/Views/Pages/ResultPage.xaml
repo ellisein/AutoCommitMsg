@@ -18,7 +18,7 @@
                     Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Style="{DynamicResource MaterialDesignRaisedButton}"
                     Command="{Binding RegenerateCommand}"
-                    Height="45" FontSize="16" Margin="10,0">
+                    Height="45" Margin="10,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="Refresh" Width="24" Height="24" Margin="0,0,8,0" />
                     <TextBlock Text="Regenerate" FontSize="16" VerticalAlignment="Center" />
@@ -26,7 +26,7 @@
             </Button>
             <Button Style="{DynamicResource MaterialDesignRaisedDarkButton}"
                     Command="{Binding BackToStartCommand}"
-                    Height="45" FontSize="16" Margin="10,0">
+                    Height="45" Margin="10,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <materialDesign:PackIcon Kind="ArrowBack" Width="24" Height="24" Margin="0,0,8,0" />
                     <TextBlock Text="Back To Start" FontSize="16" VerticalAlignment="Center" />

@@ -3,10 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AutoCommitMsg"
+        xmlns:local="clr-namespace:AutoCommitMsg.Converters"
+        xmlns:vm="clr-namespace:AutoCommitMsg.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="AutoCommitMsg" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <local:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+    </Window.Resources>
+    
     <Grid>
-        <ContentControl x:Name="MainContent" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="10"
+            Orientation="Horizontal" HorizontalAlignment="Right">
+            <RadioButton Style="{DynamicResource MaterialDesignRadioButton}"
+                         Content="English"
+                         GroupName="Language"
+                         IsChecked="{Binding SelectedLanguage, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static vm:AppLanguage.English}, Mode=TwoWay}"
+                         Command="{Binding ChangeLanguageCommand}"
+                         CommandParameter="{x:Static vm:AppLanguage.English}"
+                         Height="32" Margin="5,0">
+            </RadioButton>
+            <RadioButton Style="{DynamicResource MaterialDesignRadioButton}"
+                         Content="Korean"
+                         GroupName="Language"
+                         IsChecked="{Binding SelectedLanguage, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static vm:AppLanguage.Korean}, Mode=TwoWay}"
+                         Command="{Binding ChangeLanguageCommand}"
+                         CommandParameter="{x:Static vm:AppLanguage.Korean}"
+                         Height="32" Margin="5,0">
+            </RadioButton>
+        </StackPanel>
+
+        <ContentControl Grid.Row="1"
+                        x:Name="MainContent" />
     </Grid>
 </Window>

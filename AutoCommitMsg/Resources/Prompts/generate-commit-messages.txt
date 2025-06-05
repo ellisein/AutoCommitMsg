@@ -6,6 +6,7 @@ Based on this context, generate **three different commit messages** that summari
 - Follow best practices for commit messages (present tense, concise, informative).
 - Each message should be different in tone or focus (e.g., technical, user-facing, summary-oriented).
 - Do not include any explanations or formatting - output only the 3 commit messages, each on a new line.
+- Your messages should be written in **{language}**.
 
 Recent Git Logs:
 {git_logs}
