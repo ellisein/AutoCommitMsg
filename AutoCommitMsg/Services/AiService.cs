@@ -13,7 +13,7 @@ public static class AiService
     {
         var credential = new ApiKeyCredential(EmbeddedApiKey.OpenAiApiKey);
         var openaiClient = new OpenAIClient(credential)
-            .GetChatClient("gpt-4o-mini")
+            .GetChatClient("o4-mini")
             .AsIChatClient();
         return new ChatClientBuilder(openaiClient)
             .UseFunctionInvocation()

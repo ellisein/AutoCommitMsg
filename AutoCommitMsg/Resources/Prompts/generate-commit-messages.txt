@@ -10,7 +10,6 @@ Based on this context, generate **three different commit messages** that summari
 - If multiple unrelated changes are present, summarize them together in each commit message.
 - Do not include any explanations or formatting - output only the 3 commit messages, each on a new line.
 - Your messages should be written in **{language}**.
-- For Korean, use concise noun phrases rather than full sentences.
 
 Recent Git Logs:
 {git_logs}
