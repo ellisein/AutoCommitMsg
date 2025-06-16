@@ -8,7 +8,6 @@ Based on this context, generate **three different commit messages** that summari
 - Do not speculate or make assumptions about parts of the code that were not modified.
 - If the changes are trivial or not meaningful (e.g., whitespace, formatting, typo), do not try to over-explain or make them sound significant.
 - If multiple unrelated changes are present, summarize them together in each commit message.
-- Do not include any explanations or formatting - output only the 3 commit messages, each on a new line.
 - Your messages should be written in **{language}**.
 
 Recent Git Logs:

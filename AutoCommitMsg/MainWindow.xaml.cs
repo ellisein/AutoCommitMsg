@@ -1,8 +1,8 @@
-﻿using AutoCommitMsg.Services;
+﻿using AutoCommitMsg.Models.ChatResponses;
+using AutoCommitMsg.Services;
 using AutoCommitMsg.ViewModels;
 using AutoCommitMsg.Views.Pages;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 
 namespace AutoCommitMsg;
@@ -27,12 +27,11 @@ public partial class MainWindow : Window
         MainContent.Content = mainPage;
     }
 
-    private void ShowResultPage(string? folderPath, string response)
+    private void ShowResultPage(string? folderPath, CommitMessages? messages)
     {
         var resultVm = new ResultPageViewModel
         {
-            CommitMessages = new ObservableCollection<string>(
-                response.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            CommitMessages = new ObservableCollection<string>(messages?.Messages ?? [])
         };
         var resultPage = new ResultPage { DataContext = resultVm };
 
@@ -69,7 +68,6 @@ public partial class MainWindow : Window
 
             loadingPage.ViewModel.StatusMessage = "Generating commit message...";
             var response = await AiService.GenerateCommitMessagesAsync(gitLogs, gitDiff, vm.SelectedLanguage);
-            Debug.WriteLine(response);
 
             ShowResultPage(folderPath, response);
         }

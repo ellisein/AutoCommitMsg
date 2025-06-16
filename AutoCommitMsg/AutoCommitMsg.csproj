@@ -28,6 +28,7 @@
     <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="9.5.0-preview.1.25265.7" />
     <PackageReference Include="ModelContextProtocol" Version="0.2.0-preview.2" />
     <PackageReference Include="ModelContextProtocol.AspNetCore" Version="0.2.0-preview.2" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="4.0.1" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,12 @@
-﻿using AutoCommitMsg.ViewModels;
+﻿using AutoCommitMsg.Models.ChatResponses;
+using AutoCommitMsg.ViewModels;
 using Microsoft.Extensions.AI;
+using Newtonsoft.Json.Schema.Generation;
 using OpenAI;
 using System.ClientModel;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
 
 namespace AutoCommitMsg.Services;
 
@@ -20,20 +23,7 @@ public static class AiService
             .Build();
     }
 
-    public static async Task<string> RunPromptAsync(string prompt)
-    {
-        using var client = AiService.ChatClient();
-
-        var chatMessages = new List<ChatMessage>
-        {
-            new (ChatRole.User, prompt),
-        };
-
-        var response = await client.GetResponseAsync(chatMessages);
-        return response.Text;
-    }
-
-    public static async Task<string> GenerateCommitMessagesAsync(List<string> gitLogs, string gitDiff, AppLanguage language)
+    public static async Task<CommitMessages?> GenerateCommitMessagesAsync(List<string> gitLogs, string gitDiff, AppLanguage language)
     {
         var prompt = LoadPrompt("generate-commit-messages");
         var formattedLogs = string.Join("\n", gitLogs);
@@ -41,7 +31,16 @@ public static class AiService
             .Replace("{git_logs}", formattedLogs)
             .Replace("{git_diff}", gitDiff)
             .Replace("{language}", language.ToString());
-        return await RunPromptAsync(prompt);
+
+        var generator = new JSchemaGenerator();
+        var schema = generator.Generate(typeof(CommitMessages));
+        var jsonElement = JsonSerializer.Deserialize<JsonElement>(schema.ToString());
+        var chatResponseFormat = ChatResponseFormat.ForJsonSchema(jsonElement);
+
+        using var client = AiService.ChatClient();
+        var response = await client.GetResponseAsync(prompt, new ChatOptions { ResponseFormat = chatResponseFormat });
+
+        return JsonSerializer.Deserialize<CommitMessages>(response.Text);
     }
 
     private static string LoadPrompt(string promptName)
